@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food System Convergence Scenarios — Briefing Note</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#FFC72C; --charcoal:#53565A; --red:#C0392B; --grey:#9AA0A3;
+    --gold-dark:#B8860B; --green:#2E7D32; --maroon:#7B241C;
+    --bg-soft:#F7F7F5; --border:#E3E3E1; --text:#2B2B2B; --text-mute:#6B6E70;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Roboto',Arial,sans-serif;color:var(--text);margin:0;line-height:1.6;background:#fff;}
+  h1,h2,h3{font-family:'Libre Baskerville',Georgia,serif;color:var(--charcoal);line-height:1.25;}
+  h2{font-size:1.55rem;margin-bottom:6px;}
+  h3{font-size:1.15rem;margin:22px 0 8px;}
+  p{margin:0 0 14px;}
+  a{color:var(--gold-dark);}
+  .container{max-width:1080px;margin:0 auto;padding:0 24px;}
+  header.hero{background:var(--charcoal);color:#fff;padding:52px 0 38px;}
+  header.hero .kicker{color:var(--gold);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;margin-bottom:10px;}
+  header.hero h1{color:#fff;font-size:2.15rem;margin:0 0 12px;}
+  header.hero p.subtitle{color:#DADBDC;font-size:1.08rem;max-width:760px;margin:0 0 16px;}
+  header.hero .meta{color:#B9BBBC;font-size:.88rem;}
+  nav.toc{background:var(--bg-soft);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;}
+  nav.toc .container{display:flex;flex-wrap:wrap;gap:6px 20px;padding:12px 24px;}
+  nav.toc a{color:var(--charcoal);text-decoration:none;font-size:.84rem;font-weight:600;}
+  nav.toc a:hover{color:var(--gold-dark);}
+  section{padding:42px 0;border-bottom:1px solid #EFEFEC;}
+  section:last-of-type{border-bottom:none;}
+  .caveat-box{background:#FFF8E6;border:1px solid var(--gold);border-radius:10px;padding:16px 22px;margin:22px 0;font-size:.92rem;}
+  .caveat-box strong{color:var(--charcoal);}
+  .scenario-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:18px;margin-bottom:8px;}
+  .scenario-title{max-width:640px;}
+  .scenario-tagline{color:var(--text-mute);font-size:.95rem;margin-top:-4px;}
+  .risk-badge{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;padding:12px 22px;color:#fff;min-width:150px;text-align:center;}
+  .risk-badge .num{font-size:1.7rem;font-weight:700;line-height:1;}
+  .risk-badge .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+  .risk-badge .sub{font-size:.68rem;opacity:.85;margin-top:2px;}
+  .band-low{background:var(--green);} .band-moderate{background:var(--gold-dark);}
+  .band-high{background:#D9782E;} .band-severe{background:var(--red);}
+  .intervention-box{background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:10px 0;}
+  .intervention-box .title{font-weight:700;font-size:.94rem;margin-bottom:4px;}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;color:#fff;font-size:.74rem;font-weight:700;letter-spacing:.02em;}
+  .pill-favorable{background:var(--green);} .pill-neutral{background:var(--gold-dark);} .pill-unfavorable{background:var(--maroon);}
+  ul.watch{font-size:.92rem;padding-left:20px;}
+  ul.watch li{margin-bottom:5px;}
+  .canada-box{border-left:3px solid var(--gold);background:#FFFDF5;padding:12px 18px;margin-top:16px;border-radius:0 8px 8px 0;}
+  .canada-box .title{font-weight:700;color:var(--charcoal);font-size:.88rem;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+
+  /* Timeline */
+  .tl-outer{overflow-x:auto;padding-bottom:6px;}
+  .tl-wrap{--label-w:270px;margin:20px 0 34px;min-width:880px;}
+  .tl-axis{margin-left:var(--label-w);position:relative;height:22px;border-bottom:1px solid #ddd;}
+  .tl-axis span{position:absolute;top:0;transform:translateX(-50%);font-size:.72rem;color:var(--text-mute);}
+  .tl-body{position:relative;}
+  .tl-gridlines{position:absolute;left:var(--label-w);right:0;top:0;bottom:0;pointer-events:none;}
+  .tl-gridlines .gl{position:absolute;top:0;bottom:0;border-left:1px dashed var(--border);}
+  .tl-today{position:absolute;left:var(--label-w);top:-2px;bottom:0;width:0;border-left:2px solid var(--charcoal);}
+  .tl-today-label{position:absolute;left:var(--label-w);bottom:-18px;transform:translateX(-50%);font-size:.66rem;font-weight:700;color:var(--charcoal);}
+  .tl-row{display:flex;align-items:stretch;min-height:36px;}
+  .tl-label{width:var(--label-w);flex:0 0 var(--label-w);padding:5px 14px 5px 0;}
+  .tl-label .name{font-weight:700;font-size:.82rem;color:var(--text);}
+  .tl-label .tag{font-size:.67rem;color:#8A8D8F;font-style:italic;}
+  .tl-track{position:relative;flex:1;border-bottom:1px dotted #F0F0EE;}
+  .tl-bar{position:absolute;top:6px;bottom:6px;border-radius:5px;}
+  .tl-milestone-line{position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--border);}
+  .tl-diamond{position:absolute;top:50%;width:9px;height:9px;background:var(--charcoal);transform:translate(-50%,-50%) rotate(45deg);}
+  .tl-mlabel{position:absolute;top:56%;font-size:.65rem;color:var(--charcoal);white-space:nowrap;}
+  .legend{display:flex;flex-wrap:wrap;gap:14px 22px;margin:10px 0 4px;font-size:.8rem;}
+  .legend .sw{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+  table.compare{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88rem;}
+  table.compare th,table.compare td{border:1px solid var(--border);padding:9px 11px;text-align:left;vertical-align:top;}
+  table.compare th{background:var(--charcoal);color:#fff;font-weight:600;font-size:.82rem;}
+  table.compare tr:nth-child(even) td{background:#FAFAF9;}
+
+  ol.policy{padding-left:20px;}
+  ol.policy li{margin-bottom:14px;}
+  ol.policy .tag-row{font-size:.75rem;color:var(--text-mute);margin-top:2px;}
+
+  ol.refs{font-size:.82rem;color:#4A4C4D;padding-left:22px;}
+  ol.refs li{margin-bottom:9px;}
+
+  footer.disclaimer{background:var(--bg-soft);padding:34px 0;font-size:.8rem;color:var(--text-mute);}
+  footer.disclaimer p{margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="kicker">Briefing Note &middot; Scenario Planning</div>
+    <h1>Converging Pressures on the Global Fertilizer and Food System</h1>
+    <p class="subtitle">Four scenarios for how current shipping, input-cost, and seasonal-demand pressures could interact over the next 12&ndash;18 months, with intervention points and implications for Canada.</p>
+    <div class="meta">Prepared by the Global Food Security Monitor, Arrell Food Institute, University of Guelph &middot; August 16, 2026</div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="container">
+    <a href="#intro">Introduction</a>
+    <a href="#how-to-read">How to read this analysis</a>
+    <a href="#scenario-1">Scenario 1</a>
+    <a href="#scenario-2">Scenario 2</a>
+    <a href="#scenario-3">Scenario 3</a>
+    <a href="#scenario-4">Scenario 4</a>
+    <a href="#comparison">Comparison</a>
+    <a href="#policy">Options for Canada</a>
+    <a href="#references">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <section id="intro">
+    <h2>Introduction</h2>
+    <p>Since late February 2026, a sequence of disruptions in global fertilizer and grain shipping has been building toward a period of acute stress this autumn. Three chokepoints that together carry a large share of the world's fertilizer and food trade &mdash; the Strait of Hormuz, the Panama Canal, and Black Sea grain terminals &mdash; are simultaneously constrained. At the same time, the world's largest fertilizer buyers, in North America, are entering their autumn purchasing season at the same moment Brazilian and Argentine farmers begin planting for the Southern Hemisphere season. And in parts of Sub-Saharan Africa and South Asia, this year's harvest has already been damaged by reduced fertilizer access during the spring planting window.</p>
+    <p>Separately, a sulfur and sulfuric acid shortage &mdash; driven by the same shipping disruption plus export restrictions from China, Russia, and Turkey &mdash; is now compounding the phosphate fertilizer shock through a distinct and less visible channel: sulfuric acid is the essential input for converting phosphate rock into usable fertilizer, and there is no near-term substitute at scale.<sup><a href="#ref3">3</a></sup></p>
+    <p>This note sets out four plausible ways these pressures could combine over the coming 12 to 18 months, what would have to happen for governments and markets to absorb the shock without lasting damage, and where a well-timed intervention could change the outcome. It is written to support judgment, not to predict a single outcome. Food-system stress compounds when buffers are drawn down faster than they can be replenished &mdash; but the pathway from stress to instability is never fixed in advance, and the same analysis that identifies risk also identifies where a comparatively low-cost action still has real leverage.</p>
+    <div class="caveat-box">
+      <strong>How to treat this document.</strong> This is a scenario-planning exercise, not a forecast. Dates and durations are used to structure how converging pressures could plausibly interact; several elements (marked <strong>[J]</strong> throughout) are analytical constructions built for this exercise, not confirmed predictions. Likelihood and severity scores reflect independent judgement from the author and an AI research assistant (Claude, Anthropic), averaged. Treat the scenarios as a structured way to think about a range of outcomes, not as four discrete futures to choose between.
+    </div>
+  </section>
+
+  <section id="how-to-read">
+    <h2>How to read this analysis</h2>
+    <p>Each scenario traces the same underlying chain of events: a shipping or input-cost shock raises fertilizer prices, which either has already damaged (in Africa and South Asia) or will damage crop yields, which raises global food prices, which strains the budgets of import-dependent governments, which raises the risk of political instability. The four scenarios differ in how many of the current supply-side pressures ease or worsen together, and how quickly.</p>
+    <p><strong>Risk Index.</strong> Each scenario is scored on Likelihood (how probable this pattern is) and Severity (how serious the outcome would be), each on a 1&ndash;5 scale, independently assessed and then averaged. Likelihood &times; Severity gives a Risk Index from 1 to 25, shown as a coloured badge: <span style="color:var(--green);font-weight:700;">Low</span> (&le;5), <span style="color:var(--gold-dark);font-weight:700;">Moderate</span> (5&ndash;10), <span style="color:#D9782E;font-weight:700;">High</span> (10&ndash;16), <span style="color:var(--red);font-weight:700;">Severe</span> (&gt;16).</p>
+    <p><strong>Intervention points.</strong> For each scenario, we identify where a policy action still has real leverage, and rate it on Cost and Effectiveness (1&ndash;5 each). The resulting rating &mdash; <span class="pill pill-favorable">Favorable</span> <span class="pill pill-neutral">Neutral</span> <span class="pill pill-unfavorable">Unfavorable</span> &mdash; reflects cost relative to effectiveness, not absolute cost. A consistent pattern across the four scenarios: intervention cost rises and effectiveness falls the further downstream a shock is allowed to travel before it is addressed.</p>
+    <p><strong>Timelines.</strong> Each scenario is shown as a horizontal timeline from today (August 16, 2026) through mid-2027. <span style="color:var(--red);font-weight:700;">Red</span> bars mark active stress in the shipping, input-cost, or price chain; the <span style="color:var(--grey);font-weight:700;">grey</span> bar marks damage that has already occurred; gold and green bars mark intervention windows, coloured by their cost:effectiveness rating; and the <span style="color:var(--charcoal);font-weight:700;">dark</span> bar marks the window in which political instability risk is assessed.</p>
+    <p><strong>Confidence tags.</strong> <em>[O]</em> = directly observed / primary data. <em>[F]</em> = institutional forecast. <em>[S]</em> = secondary reporting on a primary source. <em>[J]</em> = analytical judgement, including the scenario-construction assumptions specific to this exercise.</p>
+  </section>
+
+  <!-- SCENARIO 1 -->
+  <section id="scenario-1">
+    <div class="scenario-header">
+      <div class="scenario-title">
+        <h2>Scenario 1 &mdash; Partial De-escalation</h2>
+        <p class="scenario-tagline">One or more supply-side pressures ease substantially before the autumn demand peak.</p>
+      </div>
+      <div class="risk-badge band-low"><div class="num">3.0</div><div class="label">Risk Index</div><div class="sub">Low &middot; L 2.0 / S 1.5</div></div>
+    </div>
+    <p>In this scenario, at least one major constraint eases before the autumn buying season begins &mdash; most plausibly, China holds to its stated plan to lift sulfuric acid and phosphate export restrictions by the end of August. Combined with normal seasonal fertilizer demand, this produces a real but manageable price increase rather than a shock. Most watch countries remain at the stage of scattered, uncoordinated grievance rather than organized protest activity.</p>
+
+    <div class="tl-outer"><div class="tl-wrap" id="timeline-s1"></div></div>
+
+    <h3>Intervention point</h3>
+    <div class="intervention-box">
+      <div class="title">Diplomatic effort to lock in export normalization <span class="pill pill-favorable">Favorable</span></div>
+      <p style="margin:0;">Reinforcing China's stated August timeline &mdash; making the announced outcome the floor rather than the ceiling &mdash; is low-cost relative to its effect, but only works in the narrow window before the policy is set for the season.</p>
+    </div>
+
+    <h3>Signals worth watching</h3>
+    <ul class="watch">
+      <li>China formally confirms lifting phosphate and sulfuric acid export restrictions on or before August 31</li>
+      <li>Strait of Hormuz commercial shipping traffic begins recovering toward pre-crisis baseline</li>
+      <li>Fertilizer benchmark prices (DAP, urea) plateau or decline through September</li>
+    </ul>
+
+    <div class="canada-box">
+      <div class="title">Implication for Canada</div>
+      <p style="margin:0;">The lowest-cost outcome, and the one where quiet diplomatic reinforcement of an already-announced policy has the best return. This is not a scenario requiring new financial commitments, only sustained attention.</p>
+    </div>
+  </section>
+
+  <!-- SCENARIO 2 -->
+  <section id="scenario-2">
+    <div class="scenario-header">
+      <div class="scenario-title">
+        <h2>Scenario 2 &mdash; Managed Strain <span style="font-weight:400;color:var(--text-mute);font-size:1rem;">(base case)</span></h2>
+        <p class="scenario-tagline">Current trajectories continue roughly as-is through the autumn convergence.</p>
+      </div>
+      <div class="risk-badge band-high"><div class="num">14.0</div><div class="label">Risk Index</div><div class="sub">High &middot; L 4.0 / S 3.5</div></div>
+    </div>
+    <p>This is the straight-line extrapolation of current conditions: the Strait of Hormuz remains constrained, Panama Canal draft limits continue tightening on their published schedule, sulfur and sulfuric acid export restrictions persist, and no major new shock arrives. The seasonal collision between North American autumn buying and Southern Hemisphere planting produces a sharp but not unprecedented price spike. One or two of the most fiscally fragile watch countries move from scattered discontent to organized protest activity.</p>
+
+    <div class="tl-outer"><div class="tl-wrap" id="timeline-s2"></div></div>
+
+    <h3>Intervention points</h3>
+    <div class="intervention-box">
+      <div class="title">Coordinated release of national grain reserves <span class="pill pill-neutral">Neutral</span></div>
+      <p style="margin:0;">China and India hold roughly two-thirds to three-quarters of global cereal stocks; a coordinated release or preferential lending to import-dependent buyers would ease Link&nbsp;5 price pressure, but depends on political will from two governments with their own domestic priorities.</p>
+    </div>
+    <div class="intervention-box">
+      <div class="title">Pre-positioned emergency fiscal facilities <span class="pill pill-favorable">Favorable</span></div>
+      <p style="margin:0;">IMF and bilateral rapid-financing facilities, arranged before the autumn budget cycle rather than after a crisis is declared, are a comparatively low-cost, well-tested mechanism for fiscally fragile importers.</p>
+    </div>
+
+    <h3>Signals worth watching</h3>
+    <ul class="watch">
+      <li>Fertilizer prices climb through the autumn but do not exceed 2022 peak levels</li>
+      <li>No new export restrictions announced by major producers beyond those already in force</li>
+      <li>Panama Canal draft restrictions hold to the published schedule without further cuts</li>
+    </ul>
+
+    <div class="canada-box">
+      <div class="title">Implication for Canada</div>
+      <p style="margin:0;">The most likely scenario, and the one where pre-positioning fiscal support ahead of the autumn budget cycle offers the best return relative to cost. Domestic Canadian fertilizer supply is comparatively insulated (pre-booked inputs), so the primary exposure is to import-dependent partner countries and downstream grocery-price effects at home.</p>
+    </div>
+  </section>
+
+  <!-- SCENARIO 3 -->
+  <section id="scenario-3">
+    <div class="scenario-header">
+      <div class="scenario-title">
+        <h2>Scenario 3 &mdash; Full Convergence</h2>
+        <p class="scenario-tagline">The supply-side pressures do not ease &mdash; they compound, all at once.</p>
+      </div>
+      <div class="risk-badge band-moderate"><div class="num">10.0</div><div class="label">Risk Index</div><div class="sub">Moderate &middot; L 2.5 / S 4.0</div></div>
+    </div>
+    <p>In this scenario, China extends its acid and phosphate restrictions beyond August, Panama Canal draft limits are cut further than currently scheduled, and the Strait of Hormuz shows no sign of resolution &mdash; all while the same seasonal autumn demand hits. This is multiple producing and shipping constraints breaking down at once, right as buyers most need supply. Several watch countries reach the more serious stage of organized political mobilization at roughly the same time: the "two or more regions under simultaneous stress" pattern that historically precedes broader instability, but now driven from the demand and shipping side rather than the production side.</p>
+
+    <div class="tl-outer"><div class="tl-wrap" id="timeline-s3"></div></div>
+
+    <h3>Intervention points</h3>
+    <div class="intervention-box">
+      <div class="title">Early, visible government relief measures <span class="pill pill-favorable">Favorable</span></div>
+      <p style="margin:0;">A visible, credible domestic relief measure &mdash; deployed before public grievance coalesces into organized protest, not after &mdash; is comparatively cheap and historically effective. Timing matters more than logistics: the same measure deployed late, in response to unrest already underway, is markedly less effective and can appear as damage control rather than good governance.</p>
+    </div>
+    <div class="intervention-box">
+      <div class="title">International emergency fertilizer-sharing mechanism <span class="pill pill-neutral">Neutral</span></div>
+      <p style="margin:0;">A dedicated allocation mechanism for the most exposed import-dependent countries &mdash; distinct from ordinary market access &mdash; requires new coordination but directly targets the countries least able to compete for scarce supply on price alone.</p>
+    </div>
+
+    <h3>Signals worth watching</h3>
+    <ul class="watch">
+      <li>China extends acid or phosphate export restrictions past August without a firm new end date</li>
+      <li>A second major producing or shipping region reports simultaneous stress alongside Hormuz and Panama (e.g. Black Sea escalation, a poor Russian or Indian harvest signal)</li>
+      <li>DAP or urea benchmark prices exceed spring 2026 peaks</li>
+      <li>More than one watch country shows signs of organized, cross-group protest coordination within the same month</li>
+    </ul>
+
+    <div class="canada-box">
+      <div class="title">Implication for Canada</div>
+      <p style="margin:0;">This is the scenario where the cost of acting early is clearly lower than the cost of acting late. Supporting and publicly recognizing credible relief measures by partner governments, and helping design a fertilizer-access mechanism before it is needed, are both actions with a narrow effective window.</p>
+    </div>
+  </section>
+
+  <!-- SCENARIO 4 -->
+  <section id="scenario-4">
+    <div class="scenario-header">
+      <div class="scenario-title">
+        <h2>Scenario 4 &mdash; Compound Shock</h2>
+        <p class="scenario-tagline">Full Convergence conditions, plus one additional, less predictable shock.</p>
+      </div>
+      <div class="risk-badge band-moderate"><div class="num">7.5</div><div class="label">Risk Index</div><div class="sub">Moderate &middot; L 1.5 / S 5.0</div></div>
+    </div>
+    <p>This scenario adds one further element on top of Full Convergence: a new, less predictable shock &mdash; a disruption at a shipping chokepoint, a further escalation in Black Sea grain-infrastructure conflict, or an El Ni&ntilde;o outcome at the extreme end of current forecasts. This is the least likely of the four scenarios, but produces the most severe outcome: multiple watch countries reaching the most serious stage of political instability at roughly the same time, with humanitarian and fiscal responses becoming markedly more expensive and less effective the later they arrive.</p>
+
+    <div class="tl-outer"><div class="tl-wrap" id="timeline-s4"></div></div>
+
+    <h3>Intervention points</h3>
+    <div class="intervention-box">
+      <div class="title">Emergency humanitarian financing surge <span class="pill pill-unfavorable">Unfavorable</span></div>
+      <p style="margin:0;">Closing the current humanitarian funding gap before the shock lands is the strongest available option at this stage, but it is high-cost and, by this point in the cascade, functions more as triage than prevention.</p>
+    </div>
+    <div class="intervention-box">
+      <div class="title">Emergency import financing &amp; humanitarian corridors <span class="pill pill-unfavorable">Unfavorable</span></div>
+      <p style="margin:0;">By the time this scenario's political-risk window opens, most remaining levers are late-link, high-cost, and only moderately effective &mdash; the empirical version of the argument that intervention cost-effectiveness collapses once public trust in government response has already been lost, not that intervention becomes impossible.</p>
+    </div>
+
+    <h3>Signals worth watching</h3>
+    <ul class="watch">
+      <li>An unplanned disruption occurs at a second shipping chokepoint (Panama, Black Sea, Suez) within the window, on top of Hormuz</li>
+      <li>NOAA or ECMWF El Ni&ntilde;o readings verify at or above the "very strong" end of current forecast ranges</li>
+      <li>Simultaneous unrest signals appear in three or more watch countries within a single month</li>
+      <li>WFP or major donor humanitarian funding gaps widen rather than narrow through the autumn</li>
+    </ul>
+
+    <div class="canada-box">
+      <div class="title">Implication for Canada</div>
+      <p style="margin:0;">The lowest-likelihood, highest-severity scenario. The most cost-effective Canadian contribution here is upstream of the scenario itself &mdash; sustained core funding to humanitarian financing mechanisms now, so that if this scenario materializes, the response is already funded rather than assembled from scratch under pressure.</p>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section id="comparison">
+    <h2>Scenario comparison</h2>
+    <table class="compare">
+      <thead>
+        <tr><th>Scenario</th><th>Likelihood</th><th>Severity</th><th>Risk Index</th><th>Band</th><th>Strongest intervention</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1 &mdash; Partial De-escalation</strong></td><td>2.0</td><td>1.5</td><td>3.0</td><td>Low</td><td>Diplomatic reinforcement <span class="pill pill-favorable">Favorable</span></td></tr>
+        <tr><td><strong>2 &mdash; Managed Strain (base case)</strong></td><td>4.0</td><td>3.5</td><td>14.0</td><td>High</td><td>Pre-positioned fiscal facilities <span class="pill pill-favorable">Favorable</span></td></tr>
+        <tr><td><strong>3 &mdash; Full Convergence</strong></td><td>2.5</td><td>4.0</td><td>10.0</td><td>Moderate</td><td>Early visible relief measures <span class="pill pill-favorable">Favorable</span></td></tr>
+        <tr><td><strong>4 &mdash; Compound Shock</strong></td><td>1.5</td><td>5.0</td><td>7.5</td><td>Moderate</td><td>Humanitarian financing surge <span class="pill pill-unfavorable">Unfavorable</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.9rem;color:var(--text-mute);">Reading across the row: intervention cost-effectiveness degrades from Scenario 1 to Scenario 4, but not evenly. The strongest available lever in Scenario 3 &mdash; a visible, credible, and early relief measure &mdash; is both low-cost and high-effect, provided it is deployed before organized unrest forms rather than after. By Scenario 4, that window has closed, and the remaining options are expensive and only moderately effective. The policy argument this supports is about timing more than resources: the same class of action is favorable early and unfavorable late.</p>
+  </section>
+
+  <!-- POLICY OPTIONS -->
+  <section id="policy">
+    <h2>Options for Canada</h2>
+    <p>These are not recommendations in the sense of a single preferred path; they are the set of actions that recur across the four scenarios as having a meaningfully better cost-to-effect ratio the earlier they are taken.</p>
+    <ol class="policy">
+      <li><strong>Reinforce, through existing diplomatic channels, the credibility of announced export-policy timelines</strong> (e.g. China's stated August normalization). Low-cost, time-limited window.
+        <div class="tag-row">Most relevant to: Scenario 1</div>
+      </li>
+      <li><strong>Pre-position Canadian support for IMF and bilateral rapid-financing facilities</strong> ahead of the autumn fiscal cycle for the most import-dependent, fiscally fragile states, rather than waiting for a formal crisis declaration.
+        <div class="tag-row">Most relevant to: Scenario 2</div>
+      </li>
+      <li><strong>Support transparency mechanisms for major cereal-stock holders</strong> (e.g. AMIS-style reporting) to make coordinated stock release a more tractable diplomatic ask.
+        <div class="tag-row">Most relevant to: Scenario 2</div>
+      </li>
+      <li><strong>Help design and fund an emergency fertilizer-access mechanism</strong> for the most exposed import-dependent countries, distinct from ordinary commercial market access.
+        <div class="tag-row">Most relevant to: Scenario 3</div>
+      </li>
+      <li><strong>Publicly and diplomatically recognize credible, transparent relief measures</strong> taken by partner governments, reinforcing the domestic legitimacy of governments acting early and visibly.
+        <div class="tag-row">Most relevant to: Scenario 3</div>
+      </li>
+      <li><strong>Increase core, flexible, multi-year funding to WFP and humanitarian financing mechanisms now</strong>, closing the current funding gap ahead of need rather than in response to it.
+        <div class="tag-row">Most relevant to: Scenario 4</div>
+      </li>
+      <li><strong>Monitor Canadian farm-input exposure and downstream grocery-price effects</strong> through the autumn procurement cycle as a domestic early-warning signal, independent of which scenario materializes.
+        <div class="tag-row">Cross-cutting</div>
+      </li>
+      <li><strong>Continue to invest in food-system early-warning capacity</strong> (e.g. satellite-derived agricultural stress monitoring, cascade and buffer analysis of the kind underlying this note), since the value of every option above depends on having enough lead time to use it.
+        <div class="tag-row">Cross-cutting</div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- REFERENCES -->
+  <section id="references">
+    <h2>References</h2>
+    <ol class="refs">
+      <li id="ref1">World Bank Blogs, "Fertilizer prices surge as Strait of Hormuz disruptions tighten supplies," May 2026. <a href="https://blogs.worldbank.org/en/opendata/fertilizer-prices-surge-as-strait-of-hormuz-disruptions-tighten-" target="_blank">blogs.worldbank.org</a></li>
+      <li id="ref2">Kpler, "Sulphur &amp; sulphuric acid in 2026: The feedstock crisis cascading through copper, nickel &amp; fertilisers," June 4, 2026. <a href="https://www.kpler.com/blog/sulphur-sulphuric-acid-in-2026-the-feedstock-crisis-cascading-through-copper-nickel-fertilisers" target="_blank">kpler.com</a></li>
+      <li id="ref3">Exiger, "China Halts Sulphuric Acid Exports as War Squeezes Global Supply," April 2026. <a href="https://www.exiger.com/perspectives/china-halts-sulphuric-acid-exports-as-war-squeezes-global-supply/" target="_blank">exiger.com</a></li>
+      <li id="ref4">Akin Gump, "When Supply Chains Break: Force Majeure, Hardship and the Sulfuric Acid Crisis," April 30, 2026. <a href="https://www.akingump.com/en/insights/alerts/when-supply-chains-break-force-majeure-hardship-and-the-sulfuric-acid-crisis" target="_blank">akingump.com</a></li>
+      <li id="ref5">SunSirs, "China's Suspension of Sulfuric Acid Exports: Impacts on Global Sulfur-Fertilizer-Copper Supply Chain," 2026. <a href="https://www.sunsirs.com/commodity-news/petail-32040.html" target="_blank">sunsirs.com</a></li>
+      <li id="ref6">Supply Chain Digital, "How China's Sulphuric Acid Ban Will Hit Metals &amp; Fertiliser," April 13, 2026. <a href="https://supplychaindigital.com/news/china-sulphuric-acid-ban-hit-mining-and-food-supply-chains" target="_blank">supplychaindigital.com</a></li>
+      <li id="ref7">Discovery Alert, "Global Sulfuric Acid Shortage Disrupts Mining and Fertiliser Industries," April 16, 2026. <a href="https://discoveryalert.com.au/sulfuric-acid-supply-crisis-2026-industrial-impacts/" target="_blank">discoveryalert.com.au</a></li>
+      <li id="ref8">Alchempro / Fibre2Fashion, "Sulphuric Acid Shortage: A Growing Risk for Mining," August 2026. <a href="https://www.alchempro.com/industry-article/11688/sulphuric-acid-shortage-a-growing-risk-for-mining" target="_blank">alchempro.com</a></li>
+      <li id="ref9">Stellarix, "Vapor Lock: The Global Sulfur Supply Crisis 2026," April 22, 2026. <a href="https://stellarix.com/insights/blogs/global-sulfur-supply-crisis/" target="_blank">stellarix.com</a></li>
+      <li id="ref10">GrainBrief, "DAP Fertilizer Price &mdash; 2026 Current Rates," May 5, 2026. <a href="https://grainbrief.com/prices/dap-fertilizer-price" target="_blank">grainbrief.com</a></li>
+      <li id="ref11">ProcurementResource, "Diammonium Phosphate (DAP) Prices, Trend &amp; Forecasts," 2026. <a href="https://www.procurementresource.com/resource-center/dap-price-trends" target="_blank">procurementresource.com</a></li>
+      <li id="ref12">Fertilizer Daily, "China extends phosphate export curbs through August 2026 as Russia holds fertilizer quotas," July 29, 2026. <a href="https://www.fertilizerdaily.com/20260729-china-phosphate-export-restrictions-august-2026-russia-quotas/" target="_blank">fertilizerdaily.com</a></li>
+      <li id="ref13">Decachem, "China's Phosphate Export Restrictions," April 23, 2026. <a href="https://www.decachem.com/china-phosphate-export-restrictions" target="_blank">decachem.com</a></li>
+      <li id="ref14">Panama Canal Authority (ACP), "Panama Canal Announces New Draft Adjustments for Neopanamax Locks," August 2026. <a href="https://pancanal.com/en/panama-canal-announces-new-draft-adjustments-for-neopanamax-locks/" target="_blank">pancanal.com</a></li>
+      <li id="ref15">gCaptain, "Panama Canal to Tighten Draft Limits Again as Water Levels Continue to Fall," August 2026. <a href="https://gcaptain.com/panama-canal-to-tighten-draft-limits-again-as-water-levels-continue-to-fall/" target="_blank">gcaptain.com</a></li>
+      <li id="ref16">The Maritime Executive, "Panama Canal Cuts Draft for Largest Ships as El Ni&ntilde;o Intensifies," August 2026. <a href="https://maritime-executive.com/article/panama-canal-cuts-drafts-for-largest-ships-as-el-nino-intensifies" target="_blank">maritime-executive.com</a></li>
+      <li id="ref17">International Association of Movers (IAM), "Panama Canal Tightens Draft Limits Again as El Ni&ntilde;o Intensifies," August 2026. <a href="https://iamovers.org/news/panama-canal-tightens-draft-limits-again-as-el-nino-intensifies/" target="_blank">iamovers.org</a></li>
+      <li id="ref18">Investing News Network, "Phosphate and Potash Prices on the Rise in Q1 2026: What's Driving the Increase?," April 21, 2026. <a href="https://investingnews.com/agriculture-forecast/" target="_blank">investingnews.com</a></li>
+      <li id="ref19">Global Food Security Monitor, Issues 3 &amp; 7, Arrell Food Institute, University of Guelph (internal series). <a href="https://evandgfraser.substack.com" target="_blank">evandgfraser.substack.com</a></li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="disclaimer">
+  <div class="container">
+    <p><strong>Methodology.</strong> This analysis combines historical pattern analysis, structured scenario assessment, and AI-assisted synthesis to explore how current food-system stresses could evolve over the next 12 to 18 months. It is intended to support judgement and early warning, not to predict a single outcome. Likelihood and severity scores reflect the independent assessment of the author and an AI research assistant (Claude, Anthropic), averaged; they are structured estimates, not statistical probabilities. Time-boxed elements marked [J] are scenario-construction assumptions built for this exercise and should be treated as illustrative rather than confirmed forecasts.</p>
+    <p>Prepared by the Global Food Security Monitor team, Arrell Food Institute, University of Guelph. Questions and comments: <a href="mailto:frasere@uoguelph.ca">frasere@uoguelph.ca</a>. Draft prepared for briefing purposes &mdash; August 16, 2026.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const DOMAIN_START = "2026-08-16";
+  const DOMAIN_END   = "2027-06-30";
+  const C = { red:"#C0392B", grey:"#9AA0A3", gold:"#B8860B", green:"#2E7D32", maroon:"#7B241C", charcoal:"#53565A" };
+
+  const MONTHS = [
+    ["2026-08-16","Aug"], ["2026-09-01","Sep"], ["2026-10-01","Oct"],
+    ["2026-11-01","Nov"], ["2026-12-01","Dec"], ["2027-01-01","Jan"],
+    ["2027-02-01","Feb"], ["2027-03-01","Mar"], ["2027-04-01","Apr"],
+    ["2027-05-01","May"], ["2027-06-01","Jun"]
+  ];
+
+  function pct(dateStr){
+    const d = new Date(dateStr + "T00:00:00Z");
+    const s = new Date(DOMAIN_START + "T00:00:00Z");
+    const e = new Date(DOMAIN_END + "T00:00:00Z");
+    return (d - s) / (e - s) * 100;
+  }
+
+  function renderTimeline(id, rows){
+    const wrap = document.getElementById(id);
+    if(!wrap) return;
+
+    const axis = document.createElement("div");
+    axis.className = "tl-axis";
+    MONTHS.forEach(function(m){
+      const span = document.createElement("span");
+      span.style.left = pct(m[0]) + "%";
+      span.textContent = m[1];
+      axis.appendChild(span);
+    });
+    wrap.appendChild(axis);
+
+    const body = document.createElement("div");
+    body.className = "tl-body";
+
+    const gridwrap = document.createElement("div");
+    gridwrap.className = "tl-gridlines";
+    MONTHS.forEach(function(m){
+      const gl = document.createElement("div");
+      gl.className = "gl";
+      gl.style.left = pct(m[0]) + "%";
+      gridwrap.appendChild(gl);
+    });
+    body.appendChild(gridwrap);
+
+    const today = document.createElement("div");
+    today.className = "tl-today";
+    body.appendChild(today);
+    const todayLbl = document.createElement("div");
+    todayLbl.className = "tl-today-label";
+    todayLbl.textContent = "TODAY";
+    body.appendChild(todayLbl);
+
+    rows.forEach(function(r){
+      const row = document.createElement("div");
+      row.className = "tl-row";
+
+      const label = document.createElement("div");
+      label.className = "tl-label";
+      label.innerHTML = '<div class="name">' + r.label + '</div><div class="tag">' + (r.tag || "") + '</div>';
+      row.appendChild(label);
+
+      const track = document.createElement("div");
+      track.className = "tl-track";
+
+      if (r.type === "milestone") {
+        const line = document.createElement("div");
+        line.className = "tl-milestone-line";
+        track.appendChild(line);
+        r.points.forEach(function(p){
+          const x = pct(p.date);
+          const dmd = document.createElement("div");
+          dmd.className = "tl-diamond";
+          dmd.style.left = x + "%";
+          track.appendChild(dmd);
+        });
+        const lastX = pct(r.points[r.points.length - 1].date);
+        const lbl = document.createElement("div");
+        lbl.className = "tl-mlabel";
+        lbl.style.left = Math.min(lastX + 2, 78) + "%";
+        lbl.textContent = r.points.map(function(p){ return p.label; }).join(" \u2192 ");
+        track.appendChild(lbl);
+      } else {
+        const x1 = pct(r.start), x2 = pct(r.end);
+        const bar = document.createElement("div");
+        bar.className = "tl-bar";
+        bar.style.left = x1 + "%";
+        bar.style.width = Math.max(x2 - x1, 1.0) + "%";
+        bar.style.background = r.color;
+        track.appendChild(bar);
+      }
+
+      row.appendChild(track);
+      body.appendChild(row);
+    });
+
+    wrap.appendChild(body);
+  }
+
+  const ROWS_S1 = [
+    { label:"Strait of Hormuz disruption continues, easing assumed", tag:"[O] current status; easing assumed [J]", start:"2026-08-16", end:"2026-10-15", color:C.red },
+    { label:"Panama Canal cargo capacity reduced", tag:"[O] confirmed", type:"milestone", points:[{date:"2026-08-26",label:"48.0 ft"},{date:"2026-09-03",label:"47.5 ft"}] },
+    { label:"Sulfur / phosphate export limits lifted on schedule", tag:"[J] scenario assumption", start:"2026-08-16", end:"2026-08-31", color:C.red },
+    { label:"North American fall fertilizer buying season", tag:"[O] seasonal timing", start:"2026-09-01", end:"2026-11-30", color:C.red },
+    { label:"Brazil / Argentina spring planting season", tag:"[O] seasonal timing", start:"2026-09-01", end:"2026-10-31", color:C.red },
+    { label:"Africa / South Asia harvest damage (already occurred)", tag:"[O] locked in", start:"2026-08-16", end:"2026-09-10", color:C.grey },
+    { label:"Fertilizer prices rise, briefly", tag:"[J]", start:"2026-09-15", end:"2026-10-31", color:C.red },
+    { label:"Global food prices rise, briefly", tag:"[J]", start:"2026-10-01", end:"2026-12-15", color:C.red },
+    { label:"Diplomatic push to lock in export normalization", tag:"Cost 2 / Effect 3 \u2014 Favorable", start:"2026-08-16", end:"2026-09-15", color:C.green },
+    { label:"Government budget strain, limited", tag:"[J]", start:"2026-11-01", end:"2027-01-31", color:C.red },
+    { label:"Political instability risk, contained", tag:"[J]", start:"2026-12-01", end:"2027-02-28", color:C.charcoal }
+  ];
+
+  const ROWS_S2 = [
+    { label:"Strait of Hormuz disruption persists", tag:"[O]", start:"2026-08-16", end:"2027-06-30", color:C.red },
+    { label:"Panama Canal cargo capacity reduced", tag:"[O] confirmed", type:"milestone", points:[{date:"2026-08-26",label:"48.0 ft"},{date:"2026-09-03",label:"47.5 ft"}] },
+    { label:"Sulfur / acid export restrictions hold", tag:"[S]", start:"2026-08-16", end:"2026-12-31", color:C.red },
+    { label:"North American fall fertilizer buying season", tag:"[O] seasonal timing", start:"2026-09-01", end:"2026-11-30", color:C.red },
+    { label:"Brazil / Argentina spring planting season", tag:"[O] seasonal timing", start:"2026-09-01", end:"2026-10-31", color:C.red },
+    { label:"Africa / South Asia harvest damage (already occurred)", tag:"[O] locked in", start:"2026-08-16", end:"2026-09-10", color:C.grey },
+    { label:"Fertilizer prices rise sharply (fall)", tag:"[J]", start:"2026-09-15", end:"2026-11-30", color:C.red },
+    { label:"Global food prices rise", tag:"[J]", start:"2026-10-01", end:"2027-01-31", color:C.red },
+    { label:"Coordinated release of national grain reserves", tag:"Cost 3 / Effect 3 \u2014 Neutral", start:"2026-10-01", end:"2026-12-15", color:C.gold },
+    { label:"Emergency fiscal support for vulnerable governments", tag:"Cost 3 / Effect 4 \u2014 Favorable", start:"2026-11-01", end:"2027-02-28", color:C.green },
+    { label:"Government budgets come under strain", tag:"[J]", start:"2026-12-01", end:"2027-03-31", color:C.red },
+    { label:"Political instability risk rises in 1\u20132 countries", tag:"[J]", start:"2027-01-01", end:"2027-06-30", color:C.charcoal }
+  ];
+
+  const ROWS_S3 = [
+    { label:"Strait of Hormuz disruption persists, no resolution", tag:"[O]/[J]", start:"2026-08-16", end:"2027-06-30", color:C.red },
+    { label:"Panama Canal capacity cut further than scheduled", tag:"[O] confirmed + [J] further cut assumed", type:"milestone", points:[{date:"2026-08-26",label:"48.0 ft"},{date:"2026-09-03",label:"47.5 ft"},{date:"2026-10-15",label:"~45.0 ft (assumed)"}] },
+    { label:"Sulfur / acid export restrictions extended past August", tag:"[S]/[J] extended", start:"2026-08-16", end:"2026-12-31", color:C.red },
+    { label:"North American fall buying season (amplified)", tag:"[O] timing / [J] amplified", start:"2026-09-01", end:"2026-11-30", color:C.red },
+    { label:"Brazil / Argentina planting season (amplified)", tag:"[O] timing / [J] amplified", start:"2026-09-01", end:"2026-10-31", color:C.red },
+    { label:"Africa / South Asia harvest damage (already occurred)", tag:"[O] locked in", start:"2026-08-16", end:"2026-09-10", color:C.grey },
+    { label:"Fertilizer prices rise sharply and persist", tag:"[J]", start:"2026-09-01", end:"2026-12-31", color:C.red },
+    { label:"Global food prices rise sharply", tag:"[J]", start:"2026-10-01", end:"2027-03-31", color:C.red },
+    { label:"Early, visible government relief measures", tag:"Cost 2 / Effect 4 \u2014 Favorable", start:"2026-10-01", end:"2026-11-30", color:C.green },
+    { label:"International emergency fertilizer-sharing mechanism", tag:"Cost 4 / Effect 4 \u2014 Neutral", start:"2026-11-01", end:"2027-01-31", color:C.gold },
+    { label:"Government budgets come under severe strain", tag:"[J]", start:"2026-12-01", end:"2027-04-30", color:C.red },
+    { label:"Political instability risk rises in several countries at once", tag:"[J]", start:"2027-01-01", end:"2027-06-30", color:C.charcoal }
+  ];
+
+  const ROWS_S4 = [
+    { label:"Strait of Hormuz disruption persists, no resolution", tag:"[O]/[J]", start:"2026-08-16", end:"2027-06-30", color:C.red },
+    { label:"Panama Canal capacity cut further than scheduled", tag:"[O] confirmed + [J] further cut assumed", type:"milestone", points:[{date:"2026-08-26",label:"48.0 ft"},{date:"2026-09-03",label:"47.5 ft"},{date:"2026-10-15",label:"~45.0 ft (assumed)"}] },
+    { label:"Additional unexpected shock event (unspecified trigger)", tag:"[J] tail-risk assumption", type:"milestone", points:[{date:"2026-11-15",label:"Shock event"}] },
+    { label:"Sulfur / acid export restrictions extended past August", tag:"[S]/[J] extended", start:"2026-08-16", end:"2026-12-31", color:C.red },
+    { label:"North American fall buying season (amplified)", tag:"[O] timing / [J] amplified", start:"2026-09-01", end:"2026-11-30", color:C.red },
+    { label:"Brazil / Argentina planting season (amplified)", tag:"[O] timing / [J] amplified", start:"2026-09-01", end:"2026-10-31", color:C.red },
+    { label:"Africa / South Asia harvest damage (already occurred)", tag:"[O] locked in", start:"2026-08-16", end:"2026-09-10", color:C.grey },
+    { label:"Fertilizer prices spike sharply", tag:"[J]", start:"2026-09-01", end:"2027-01-31", color:C.red },
+    { label:"Global food prices rise sharply and persist", tag:"[J]", start:"2026-10-01", end:"2027-06-30", color:C.red },
+    { label:"Emergency humanitarian financing surge", tag:"Cost 5 / Effect 3 \u2014 Unfavorable", start:"2026-12-01", end:"2027-03-31", color:C.maroon },
+    { label:"Emergency food-import financing & aid corridors", tag:"Cost 5 / Effect 2 \u2014 Unfavorable", start:"2027-01-01", end:"2027-06-30", color:C.maroon },
+    { label:"Government budgets under severe, prolonged strain", tag:"[J]", start:"2026-11-01", end:"2027-05-31", color:C.red },
+    { label:"Political instability risk rises sharply in multiple countries (continues beyond horizon)", tag:"[J]", start:"2026-12-01", end:"2027-06-30", color:C.charcoal }
+  ];
+
+  renderTimeline("timeline-s1", ROWS_S1);
+  renderTimeline("timeline-s2", ROWS_S2);
+  renderTimeline("timeline-s3", ROWS_S3);
+  renderTimeline("timeline-s4", ROWS_S4);
+})();
+</script>
+
+</body>
+</html>
